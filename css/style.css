@@ -1,0 +1,83 @@
+body{
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(40,75,105,1) 35%, rgba(35,70,115,0.927608543417367) 100%);
+}
+
+/* Required for full background image */
+
+html,
+body,
+header,
+.view {
+    height: auto;
+  font-family: "Cambo", "Times New Roman", serif;
+  
+}
+
+@media (max-width: 740px) {
+  html,
+  body,
+  header,
+  .view {
+    height: auto;
+  }
+}
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  header,
+  .view {
+    height: auto;
+  }
+}
+
+.btn .fa {
+  margin-left: 3px;
+}
+
+
+
+.navbar:not(.top-nav-collapse) {
+  background: transparent !important;
+}
+
+
+
+.btn-white {
+  color: black !important;
+}
+
+h3{
+color: white;
+font-size: 2.4em;
+    line-height: 1.25;
+    margin: 0.4em 0;
+    font-weight: bold;
+}
+
+h4, p, label{
+  color:white;
+}
+
+.or{
+  color: gray;
+}
+
+h6 {
+  line-height: 1.7;
+}
+
+    
+.computer {
+
+    padding: 2rem;
+}
+
+a:link {
+  color: white;
+  background-color: transparent;
+
+}
+
+a:visited {
+  color: white;}
