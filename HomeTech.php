@@ -1,5 +1,6 @@
 <?php
 //test git
+//3 test 
 require "scripts/session.php";
 if (!isset($_SESSION)) {
     header("location:login.php");
