@@ -59,14 +59,6 @@ $pend[]= $line3;
 return $pend;
 }
 
-function insertuponaccept(){
-  global $con;
-  $sql5 = "UPDATE request SET technician_id = '$userid' WHERE Rid ='$req_id'";
-  if ($con->query($sql5) === TRUE){
-  } else{
-  echo "Error updating record: " . $con->error;}
-  }
-
 ?>
 
 <!DOCTYPE html>
