@@ -8,11 +8,10 @@ require "scripts/db.php";
 
 $con = connect();
 
-
-
 ?>
+
 <?php
- $userid = $_SESSION['user'];//(isset($_GET['uid']) ? $_GET['uid'] : NULL);
+ $userid = $_SESSION['user'];
 
  $sql = "SELECT * FROM technician WHERE Tid='$userid'";
  $result = mysqli_query($con, $sql);
@@ -74,7 +73,7 @@ function insertuponaccept(){
 <html lang="en">
 <head>
 <meta charset="utf-8">
-
+    
 <title>Technician Home | CPUber</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
@@ -282,7 +281,7 @@ function insertuponaccept(){
   <p class="Pdetails">Details: <?php echo $device_pd?> </p>
   <p class="dates"><?php echo $req_time ?></p>
 
-  <button type="submit" class="btn blue-gradient" onclick="" name="accepted">Accept</button>
+  <button type="submit" class="btn blue-gradient" onclick="myAjax(this, <?php echo $userid ?>)" id="<?php echo $req_id ?>">Accept</button>
 
   <button  class="btn purple-gradient" onclick="deny(this)" id="<?php echo $req_id ?>">Deny</button>
 
@@ -312,43 +311,23 @@ document.getElementById(ids).style.display = "none";
 }
 }
 
+function myAjax(dd, tid){
+var xmlhttp = new XMLHttpRequest();
+var reqtobeupdated = dd.id;
+var tidd = tid;
+      xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+          {
+              alert(xmlhttp.responseText);
+          }
+      };
+      xmlhttp.open("GET", "insertuponaccept.php?id=" +reqtobeupdated+"&tid="+tidd, true);
+      xmlhttp.send();
+}
 
 </script>
 
-<!--
-<div class="col-3 req1">
-<p class="margin-10px-left text-yellow">#0003</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Apple</p>
-<p class="Dproblem">The device is not working</p>
-<p class="Pdetails">Details: </p>
-<p class="dates">5-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
 
-<div class="col-3 req2">
-<p class="margin-10px-left text-purple">#0004</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Samsung</p>
-<p class="Dproblem">The device fell into water</p>
-<p class="Pdetails">Details: </p>
-<p class="dates">4-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
-
-<div class="col-3 req3">
-<p class="margin-10px-left text-orange">#0005</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: other</p>
-<p class="Dproblem">The screen is broken</p>
-<p class="Pdetails">Details: my phone is from Huawei</p>
-<p class="dates">3-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
--->
 </div>
 
 <div class="row justify-content-start Row4">
@@ -373,36 +352,12 @@ document.getElementById(ids).style.display = "none";
     <p class="margin-10px-left text-yellow">#<?php echo $req_id; ?></p>
     <button  class="btn purple-gradient" id="<?php echo $req_id ?>">View Details</button>
 
-    <!--
-    <p class="DeviceType1">Device Type: <?php echo $device_t?></p>
-    <p class="Pdetails">Details: <?php echo $device_pd?> </p>
-    <p class="dates"><?php echo $req_time ?></p>
-    -->
     </div>
     <?php
   }
 
    ?>
 
-<!--
-<div class="col-3 Freq1">
-<p class="margin-10px-left text-pink">#0001</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: apple</p>
-<p class="Dproblem">The screen is broken</p>
-<p class="Pdetails">Details: it's an iphone 7</p>
-<p class="dates">1-1-2020</p>
-</div>
-
-<div class="col-3 Freq2">
-<p class="margin-10px-left text-green">#0002</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Samsung</p>
-<p class="Dproblem">The device fell into water</p>
-<p class="Pdetails">Details: audio was affected with water damage</p>
-<p class="dates">2-1-2020</p>
-</div>
--->
 </div>
 
 </div>
