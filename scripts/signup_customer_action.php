@@ -29,22 +29,26 @@ if (!empty($_POST["address"])) {
     $error .= "</br> Address Is Required";
 }
 if (empty($error)) {
-    $sql = "select * from customer where username='$username'";
+    $sql = "select * from customer where username='$username' OR email='$email'";
     $result = $conn->query($sql)->fetch_assoc();
     if ($result == null){
-        $salt = uniqid('cpuber', true);
+        $salt = uniqid('CPUBER', true);
         $hash = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
         $sql = "INSERT INTO  customer(username, password, name, email, address) VALUES ('$username','$hash','$name','$email','$address')";
         if ($conn->query($sql) == true) {
-            $_SESSION["user"] = $username;
+            $sql_cus = "select * from customer where username='$username'";
+            $cust = $conn->query($sql_cus)->fetch_assoc();
+
+            //$_SESSION["user"] = $username;
+            $_SESSION["user"] = $cust["Cid"];
             $_SESSION["role"] = 'customer';
-            header("location:../homeCust.php");
+            header("location:../order.php");
         } else {
             $_SESSION["error"] = "Contact Technical Support";
             header("location:../signup.php?errorCustomer='Contact Technical Support'");
         }
     }else{
-        header("location:../signup.php?errorCustomer=Username exist");
+        header("location:../signup.php?errorCustomer=Username Or Email exist");
     }
 
 } else {

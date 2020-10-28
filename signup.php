@@ -42,6 +42,7 @@ if (isset($_GET["errorCustomer"])) {
             <button type="button" class="toggle-btn" onclick="customerForm()">Customer</button>
             <button type="button" class="toggle-btn" onclick="technicianForm()">Technician</button>
         </div>
+
         <form id="customer" class="input-group" action="scripts/signup_customer_action.php" method="post">
             <?php
             echo $errorCustomer;
@@ -57,10 +58,11 @@ if (isset($_GET["errorCustomer"])) {
             <p class="or">OR</p>
             <div class="login-btn purple-gradient"><a href="login.php">Log in</a></div>
         </form>
+
         <form id="technician" class="input-group" action="scripts/signup_technician_action.php" method="post">
-            <?php
-            echo $error;
-            ?>
+          <?php
+          echo $error;
+          ?>
             <input type="text" name="technicianName" class="input-field" placeholder="Name" required style="top: 0"/>
             <input type="email" name="email" class="input-field" placeholder="Email " required/>
             <input type="username" name="username" class="input-field" placeholder="User name " required/>
@@ -76,10 +78,13 @@ if (isset($_GET["errorCustomer"])) {
                 <option value="Windows 10">Windows 10</option>
                 <option value="Android">Android</option>
             </select>
-            <input type="number" class="input-field" id="quantity" name="quantity" min="1"
+            <input type="number" class="input-field" id="YOE" name="YOE" min="1"
                    placeholder="Years of Experience">
+                   <br><br>
             <textarea name="bio" id="bio" cols="40" rows="3">Bio</textarea>
+            <br><br>
             <button type="submit" class="submit-btn">Sign up</button>
+
             <p class="or">OR</p>
             <div class="login-btn purple-gradient"><a href="login.php">Log in</a></div>
         </form>

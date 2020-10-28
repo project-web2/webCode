@@ -1,3 +1,14 @@
+<?php
+require "scripts/db.php";
+require "scripts/session.php";
+$userid=$_SESSION["user"];
+if (!isset($_SESSION["user"])) {
+    header("location:login.php");
+    die();
+  }
+global $con;
+$con = connect();
+?>
 <html>
     <html lang="en">
 <head>
@@ -13,18 +24,18 @@
 			   $(".wrapper").toggleClass("collapse");
 			});
 		});
-	</script>  
+	</script>
    <script>
 function deleteRow(r) {
   var i = r.parentNode.parentNode.rowIndex;
   document.getElementById("myTable").deleteRow(i);
 }
-</script> 
-    
-    
+</script>
+
+
     </head>
     <style>
-    
+
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap');
 
 *{
@@ -65,7 +76,7 @@ body{
   height: 4px;
   background: #fff;
   margin: 5px 0;
-  
+
 }
 
 .wrapper .top_navbar .top_menu{
@@ -99,7 +110,7 @@ width: 35px;
     line-height: 35px;
   text-align: center;
   border: 1px solid #161c27;
- 
+
   color: #fff;
 }
 
@@ -117,7 +128,7 @@ width: 35px;
   background: #161c27;
   width: 200px;
   height: calc(100% - 80px);
-  
+
 }
 
 .wrapper .sidebar ul li a{
@@ -182,7 +193,7 @@ width: 35px;
 }
 
 .wrapper.collapse .sidebar ul li a{
-  text-align: center; 
+  text-align: center;
 }
 
 .wrapper.collapse .sidebar ul li a span.icon{
@@ -196,13 +207,13 @@ width: 35px;
 .wrapper.collapse .main_container{
   width: (100% - 70px);
   margin-left: 70px;
-    
+
 }
 
-   
-       
+
+
 table {
-    
+
     background: #fff;
   border-collapse: collapse;
   width: 100%;
@@ -214,11 +225,11 @@ th, td {
 }
 
 tr:nth-child(even) {background-color: #f2f2f2;}
-        
-   
-        
-        
-        
+
+
+
+
+
         .badge-danger-light {
     color: #dc3545;
     background-color: #fbe7e9;
@@ -236,7 +247,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     transition: color 0.15s ease-in-out,
         background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }
-        
+
     .badge-success-light {
     color: #28a745;
     background-color: #e5f4e9;
@@ -253,7 +264,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     border-radius: 5px;
     transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }
-        
+
  .badge-info-light {
     color: #17a2b8;
 background-color: #e3f4f6;
@@ -269,8 +280,8 @@ background-color: #e3f4f6;
     vertical-align: baseline;
     border-radius: 5px;
     transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
-}       
-      
+}
+
 
 .btn {
  background-color: #fff;
@@ -281,7 +292,7 @@ background-color: #e3f4f6;
 }
 
     input[type="button"]{
- background-color: #fff; 
+ background-color: #fff;
   border: none;
   color: black;
 
@@ -289,11 +300,12 @@ background-color: #e3f4f6;
 }
 
     </style>
-  
+
 <body>
 
+
 <div class="wrapper">
-  
+
   <div class="top_navbar">
     <div class="hamburger">
        <div class="one"></div>
@@ -306,85 +318,108 @@ background-color: #e3f4f6;
       </div>
     </div>
   </div>
-  
+
   <div class="sidebar">
      <ul>
-        <li><a href="homeCust.php"   >
+        <!--<li><a href="homeCust.php"   >
           <span class="icon"><img src="img/prof.png" width="20" height="20"  ></span>
           <span class="title">Profile</span>
-          </a></li>
-        <li><a href="newreq.html" >
+        </a></li>-->
+        <li><a href="NewReq.php" >
           <span class="icon"><img src="img/add.png" width="20" height="20" ></span>
           <span class="title">New Requst</span>
           </a></li>
-        <li><a href="order.html" class="active">
+        <li><a href="order.php" class="active">
           <span class="icon"><img src="img/order2.png" width="20" height="20" ></span>
           <span class="title">Order</span>
           </a></li>
-        <li><a href="index.php" >
+        <li><a href="logout.php" >
           <span class="icon"><img src="img/logout.png"width="20" height="20" ></span>
           <span class="title">Logout</span>
           </a></li>
-       
+
     </ul>
   </div>
-  
   <div class="main_container">
-    <div class="item">
-      <table class="table table-hover table-responsive-md" id="myTable">
-        
-              <thead class="bg-light">
-                <tr>
-                  <th class="py-4 pl-4 text-sm border-0">Order #</th>
-                  <th class="py-4 text-sm border-0">Date</th>
-                  
-                  <th class="py-4 text-sm border-0">Status</th>
-                  <th class="py-4 text-sm border-0">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                   
-                <tr>
-                  <th class="pl-4 py-5 align-middle">#456</th>
-                  <td class="py-5 align-middle">30/9/2019</td>
-                  <td class="py-5 align-middle"><span class="badge badge-success-light">Complete</span></td>
-                  <td class="py-5 align-middle">
-                       <a  href="viewCo.html" ><i class="fa fa-eye"></i></a>
-                      
-                     
-                      
-                    </td>
-                </tr>
-                <tr>
-                  <th class="pl-4 py-5 align-middle">#123</th>
-                  <td class="py-5 align-middle">22/6/2019</td>
-                  
-                  <td class="py-5 align-middle"><span class="badge badge-info-light">Being prepared</span></td>
-                  <td class="py-5 align-middle">
-                      <a  href="viewC.html" ><i class="fa fa-eye"></i> </a><br><br>
-                 <a  href="edit.html" ><i class="fa fa-edit"></i></a><br><br>
-                   <input type="button" value="X" onclick="deleteRow(this)"></td>
-                    
-                </tr>
-              
-                  
-                <tr>
-                  <th class="pl-4 py-5 align-middle">#654</th>
-                  <td class="py-5 align-middle">22/6/2018</td>
-                  <td class="py-5 align-middle"><span class="badge badge-danger-light">Cancelled</span></td>
-                  <td class="py-5 align-middle"><a  href="viewC.html" ><i class="fa fa-eye"></i></a>
-                  </td>
-                  </tr>
-              </tbody>
-            </table>
+     <div class="item">
+<h2>Pending Orders: </h2><br><hr><br>
+        <div style="overflow-x:auto;">
+  <table id="myTable">
+    <tr>
+      <th>Order#</th>
+      <th>Date/Time</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+        <?php
+    $qry="SELECT *
+    FROM request
+    WHERE technician_id IS NULL AND customer_id='$userid'
+    ORDER BY time DESC ";
+    $res=mysqli_query($con,$qry);
+    $nums = mysqli_num_rows($res);
+    while($r= mysqli_fetch_array($res)){
+    ?>
+    <tr>
+      <td><?php  echo $r['Rid']; ?></td>
+      <td><?php  echo $r['time']; ?></td>
+      <td><?php  echo $r['price']; ?></td>
+      <td><a  href="viewPending.php" ><i class="fa fa-eye"></i></a><br><br>
+          <a  href="edit.html" ><i class="fa fa-edit"></i></a><br><br>
+     <input type="button" value="X" onclick="deleteRow(this)"></td>
+    </tr>
+   <?php   }
+      ?>
+  </table>
+</div>
+        <br><hr>
     </div>
-   
-  
-   
+
+
+
   </div>
+
+    <div class="main_container">
+    <div class="item">
+<h2>Completed Orders: </h2><br><hr><br>
+        <div style="overflow-x:auto;">
+  <table>
+    <tr>
+   <th>Order#</th>
+      <th>Date/Time</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+        <?php
+    $qry="SELECT *
+         FROM request
+         WHERE technician_id != 0 AND customer_id='$userid'
+        ORDER BY time DESC
+         ";
+
+    $res=mysqli_query($con,$qry);
+    $nums = mysqli_num_rows($res);
+    while($r= mysqli_fetch_array($res)){
+    ?>
+    <tr>
+      <td><?php  echo $r['Rid']; ?></td>
+      <td><?php  echo $r['time']; ?></td>
+      <td><?php  echo $r['price']; ?></td>
+      <td><a  href="viewCo.php" ><i class="fa fa-eye"></i></a></td>
+
+    </tr>
+   <?php   }
+      ?>
+  </table><br><hr><br>
+</div>
+    </div>
+  </div>
+
+
+
 </div>
 
-    
+
     </body>
 
 

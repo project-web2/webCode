@@ -10,6 +10,9 @@
   <component name="ComposerSettings">
     <execution />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1j5lSZ2Zu0Y39kFlZ1Fyx8DGRYE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -18,7 +21,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../virtual" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -33,6 +36,7 @@
       <workItem from="1603101834500" duration="10767000" />
       <workItem from="1603175350498" duration="3852000" />
       <workItem from="1603182126364" duration="3555000" />
+      <workItem from="1603866595261" duration="2808000" />
     </task>
     <servers />
   </component>
@@ -56,9 +60,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="165" key="SettingsEditor/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1603108529287" />
-    <state x="1920" y="0" width="1403" height="947" key="dock-window-1" timestamp="1603182325890">
+    <state x="1920" y="0" width="1456" height="947" key="dock-window-1" timestamp="1603867250042">
       <screen x="1920" y="0" width="1440" height="860" />
     </state>
-    <state x="1920" y="0" width="1403" height="947" key="dock-window-1/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1603182325890" />
+    <state x="1920" y="0" width="1456" height="947" key="dock-window-1/0.0.1920.1040/1920.0.1440.860@0.0.1920.1040" timestamp="1603867250042" />
   </component>
 </project>

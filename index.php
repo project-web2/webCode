@@ -41,8 +41,8 @@ require "scripts/session.php";
                     if (isset($_SESSION["user"])) {
                         ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">
-                                <i class="fas fa-sign-out-alt"></i> Logout</a>
+                            <a class="nav-link" href="login.php">
+                                <i class="fas fa-sign-in-alt"></i> Logout</a>
                         </li>
                         <?php
                     } else {

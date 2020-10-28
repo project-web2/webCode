@@ -20,9 +20,9 @@ if (empty($error)) {
     $result = $conn->query($sql)->fetch_assoc();
     $tmp =password_verify($password,$result["password"]);
     if ($tmp) {
-        $_SESSION["user"] = $result["id"];
+        $_SESSION["user"] = $result["Tid"];
         $_SESSION["role"] = 'technician';
-         header("location:../HomeTech.php");
+         header("location:../HomeTech1.php");
     } else {
         header("location:../login.php?errorTechnician=Technician Not Found");
     }

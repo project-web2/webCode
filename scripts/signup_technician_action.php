@@ -39,10 +39,10 @@ if (!empty($_POST["speciality"])) {
 } else {
     $error .= "</br> Speciality Is Required";
 }
-if (!empty($_POST["quantity"])) {
-    $quantity = $conn->real_escape_string($_POST["quantity"]);
+if (!empty($_POST["YOE"])) {
+    $YOE = $conn->real_escape_string($_POST["YOE"]);
 } else {
-    $error .= "</br> Quantity Is Required";
+    $error .= "</br> YOE Is Required";
 }
 if (!empty($_POST["bio"])) {
     $bio = $conn->real_escape_string($_POST["bio"]);
@@ -50,22 +50,24 @@ if (!empty($_POST["bio"])) {
     $error .= "</br> Bio Is Required";
 }
 if (empty($error)) {
-    $sql = "select * from technician where username='$username'";
+    $sql = "select * from technician where username='$username' OR email='$email'";
     $result = $conn->query($sql)->fetch_assoc();
     if ($result == null) {
-        $salt = uniqid('cpuber', true);
+        $salt = uniqid('CPUBER', true);
         $hash = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-        $sql = "INSERT INTO technician(username, password, name, email, address, speciality,phone,quantity,bio) VALUES ('$username','$hash','$name','$email','$address','$speciality','$phone','$quantity','$bio')";
+        $sql = "INSERT INTO technician(username, password, name, email, address, speciality,phone,YOE,bio) VALUES ('$username','$hash','$name','$email','$address','$speciality','$phone','$YOE','$bio')";
         if ($conn->query($sql) == true) {
-            $_SESSION["user"] = $username;
+            $sql_tech = "select * from technician where username='$username'";
+            $tech = $conn->query($sql_tech)->fetch_assoc();
+            $_SESSION["user"] = $tech["Tid"];
             $_SESSION["role"] = 'technician';
-            header("location:../HomeTech.php");
+            header("location:../HomeTech1.php");
         } else {
             $_SESSION["error"] = "Contact Technical Support";
             header("location:../signup.php?error='Contact Technical Support'");
         }
     } else {
-        header("location:../signup.php?errorCustomer=Username exist");
+        header("location:../signup.php?errorCustomer=Username Or Email exist");
     }
 } else {
     $_SESSION["error"] = $error;

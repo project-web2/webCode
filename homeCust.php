@@ -1,6 +1,6 @@
 <?php
 require "scripts/session.php";
-if (!isset($_SESSION["user"])) {
+if (! isset($_SESSION["user"])) {
     header("location:login.php");
     die();
 }

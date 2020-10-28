@@ -1,18 +1,43 @@
 <?php
-//test git
-//3 test 
 require "scripts/session.php";
-if (!isset($_SESSION)) {
+if (!isset($_SESSION["user"])) {
     header("location:login.php");
     die();
-}
+  }
+require "scripts/db.php";
+$con = connect();
+
+
+$userid = $_SESSION['user'];//(isset($_GET['uid']) ? $_GET['uid'] : NULL);
+
+ $sql = "SELECT * FROM technician WHERE Tid='$userid'";
+ $result = mysqli_query($con, $sql);
+ $name = mysqli_fetch_assoc($result);
+
+ $sql2 = "SELECT * FROM Rate WHERE Tech_ID='$userid' ORDER BY Rate_id; ";
+ $result2 = mysqli_query($con, $sql2);
+ $all_rate = array();
+ while($line = mysqli_fetch_assoc($result2)){
+   $all_rate[] =$line;
+ }
+
+ $p_array = array_column($all_rate, "Professional");
+ $averageP = array_sum($p_array)/count($p_array);
+
+$f_array = array_column($all_rate, "fixed");
+$averageF = array_sum($f_array)/count($f_array);
+
+$s_array = array_column($all_rate, "Satisfi");
+$averageS =array_sum($s_array)/count($s_array);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 
-<title>CPUber | Technician Home </title>
+<title>Technician Profile | CPUber</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 <!-- Google Fonts Roboto -->
@@ -47,8 +72,8 @@ if (!isset($_SESSION)) {
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user"></i> Profile </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                <a class="dropdown-item" href="#">My account</a>
-                <a class="dropdown-item" href="logout.php">Log out</a>
+                <a class="dropdown-item" href="HomeTech1.php">My account</a>
+                <a class="dropdown-item" href="index.php">Log out</a>
               </div>
             </li>
           </ul>
@@ -75,16 +100,8 @@ if (!isset($_SESSION)) {
 
 <div class="bg-light-gray padding-30px-all md-padding-25px-all sm-padding-20px-all text-center">
 <h4 class="margin-10px-bottom font-size24 md-font-size22 sm-font-size20 font-weight-600">Technician</h4>
-<p class="sm-width-95 sm-margin-auto">I specialize in rebooting phones, Fixing screens, Restoring pictures and anything phone related</p>
+<p class="sm-width-95 sm-margin-auto"><?php echo $name['tech_bio']; ?></p>
 
-<div class="margin-20px-top team-single-icons">
-<ul class="no-margin">
-<li><a href="javascript:void(0)"><i class="fab fa-facebook-f"></i></a></li>
-<li><a href="javascript:void(0)"><i class="fab fa-twitter"></i></a></li>
-<li><a href="javascript:void(0)"><i class="fab fa-google-plus-g"></i></a></li>
-<li><a href="javascript:void(0)"><i class="fab fa-instagram"></i></a></li>
-</ul>
-</div>
 
 </div>
 </div>
@@ -92,7 +109,11 @@ if (!isset($_SESSION)) {
 <div class="col-lg-8 col-md-7">
 <div class="team-single-text padding-50px-left sm-no-padding-left">
     <br>
-<h4 class="font-size38 sm-font-size32 xs-font-size30">Khalid Abdullah</h4>
+
+    <h4 class="font-size38 sm-font-size32 xs-font-size30">
+    <?php  echo $name['name']; ?>
+    </h4>
+
 <br>
 <div class="contact-info-section margin-40px-tb">
 <ul class="list-style9 no-margin">
@@ -104,7 +125,8 @@ if (!isset($_SESSION)) {
 <strong class="margin-10px-left text-orange">Profession:</strong>
 </div>
 <div class="col-md-7 col-7">
-<p>Mobile Technician</p>
+<p>
+  <?php echo $name['speciality'];?></p>
 </div>
 </div>
 </li>
@@ -116,7 +138,7 @@ if (!isset($_SESSION)) {
 <strong class="margin-10px-left text-yellow">Experience:</strong>
 </div>
 <div class="col-md-7 col-7">
-<p>4 Years</p>
+<p><?php  echo $name['YO']." years"; ?></p>
 </div>
 </div>
 </li>
@@ -125,37 +147,14 @@ if (!isset($_SESSION)) {
 <div class="row">
 <div class="col-md-5 col-5">
 <i class="fas fa-map-marker-alt text-green"></i>
-<strong class="margin-10px-left text-green">City:</strong>
+<strong class="margin-10px-left text-green">Address:</strong>
 </div>
 <div class="col-md-7 col-7">
-<p>Riyadh</p>
+<p><?php  echo $name['address']; ?></p>
 </div>
 </div>
 </li>
 
-<li>
-<div class="row">
-<div class="col-md-5 col-5">
-<i class="fas fa-mobile-alt text-purple"></i>
-<strong class="margin-10px-left xs-margin-four-left text-purple">Phone:</strong>
-</div>
-<div class="col-md-7 col-7">
-<p>(+966) 505 123456</p>
-</div>
-</div>
-</li>
-
-<li>
-<div class="row">
-<div class="col-md-5 col-5">
-<i class="fas fa-envelope text-pink"></i>
-<strong class="margin-10px-left xs-margin-four-left text-pink">Email:</strong>
-</div>
-<div class="col-md-7 col-7">
-<p><a href="javascript:void(0)">tech@email.com</a></p>
-</div>
-</div>
-</li>
 
 </ul>
 </div>
@@ -166,116 +165,54 @@ if (!isset($_SESSION)) {
 <div class="progress-text">
 <div class="row">
 <div class="col-7">Professionalism</div>
-<div class="col-5 text-right">90%</div>
+<div class="col-5 text-right"><?php echo $averageP.'%'; ?></div>
 </div>
 </div>
 
 <div class="custom-progress progress">
-<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:90%" class="animated custom-bar progress-bar slideInLeft bg-sky"></div>
+<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $averageP; ?>%" class="animated custom-bar progress-bar slideInLeft bg-sky"></div>
 </div>
 
 <div class="progress-text">
 <div class="row">
 <div class="col-7">Customer Satisfaction</div>
-<div class="col-5 text-right">95%</div>
+<div class="col-5 text-right"><?php echo $averageS.'%'; ?></div>
 </div>
 </div>
 
 <div class="custom-progress progress">
-<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:95%" class="animated custom-bar progress-bar slideInLeft bg-orange"></div>
+<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $averageS; ?>%" class="animated custom-bar progress-bar slideInLeft bg-orange"></div>
 </div>
 
 <div class="progress-text">
 <div class="row">
 <div class="col-7">Fixed Issues</div>
-<div class="col-5 text-right">100%</div>
+<div class="col-5 text-right"><?php echo $averageF.'%'; ?></div>
 </div>
 </div>
 
 <div class="custom-progress progress">
-<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:100%" class="animated custom-bar progress-bar slideInLeft bg-green"></div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-<div class="col-md-12">
-
-</div>
-</div>
-</div>
-
-<!-- Pending requests-->
-<div class="row justify-content-start Row2">
-<h3>Pending Requests:</h3>
-</div>
-
-<div class="row justify-content-start Row3">
-
-<div class="col-3 req1">
-<p class="margin-10px-left text-yellow">#0003</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Apple</p>
-<p class="Dproblem">The device is not working</p>
-<p class="Pdetails">Details: </p>
-<p class="dates">5-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
-
-<div class="col-3 req2">
-<p class="margin-10px-left text-purple">#0004</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Samsung</p>
-<p class="Dproblem">The device fell into water</p>
-<p class="Pdetails">Details: </p>
-<p class="dates">4-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
-
-<div class="col-3 req3">
-<p class="margin-10px-left text-orange">#0005</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: other</p>
-<p class="Dproblem">The screen is broken</p>
-<p class="Pdetails">Details: my phone is from Huawei</p>
-<p class="dates">3-1-2020</p>
-<button class="btn blue-gradient">Accept</button>
-<button class="btn purple-gradient">Deny</button>
-</div>
-</div>
-
-<div class="row justify-content-start Row4">
-<h3>Finished Requests:</h3>
+<div role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:<?php echo $averageF; ?>%" class="animated custom-bar progress-bar slideInLeft bg-green"></div>
 </div>
 
 
-<div class="row justify-content-start Row5">
+<button class="btn peach-gradient" onclick="location.href='reveiw.html'"> Rate Technician</button>
+</div>
+<br>
+<br>
 
-<div class="col-3 Freq1">
-<p class="margin-10px-left text-pink">#0001</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: apple</p>
-<p class="Dproblem">The screen is broken</p>
-<p class="Pdetails">Details: it's an iphone 7</p>
-<p class="dates">1-1-2020</p>
+</div>
 </div>
 
-<div class="col-3 Freq2">
-<p class="margin-10px-left text-green">#0002</p>
-<p class="DeviceType1">Device Type: phone</p>
-<p class="DeviceType2">Company: Samsung</p>
-<p class="Dproblem">The device fell into water</p>
-<p class="Pdetails">Details: audio was affected with water damage</p>
-<p class="dates">2-1-2020</p>
-</div>
 
 </div>
 
+
 </div>
+
+
+</div>
+
 <!-- jQuery -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- Bootstrap tooltips -->
@@ -286,6 +223,7 @@ if (!isset($_SESSION)) {
 <script type="text/javascript" src="js/mdb.min.js"></script>
 <!-- Your custom scripts (optional) -->
 <script type="text/javascript"></script>
+</div>
 </body>
 <footer class="page-footer font-small unique-color-dark">
 

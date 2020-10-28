@@ -1,6 +1,6 @@
 <?php
 define('DBHOST', 'localhost');
-define('DBNAME', 'LCPU');
+define('DBNAME', 'CPUBER');
 define('DBUSER', 'root');
 define('DBPASS', 'root');
 ?>

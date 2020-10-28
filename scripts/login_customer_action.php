@@ -4,6 +4,8 @@ $conn = connect();
 $error = "";
 $password = "";
 $username = "";
+
+
 if (!empty($_POST["customerUsername"])) {
     $username = $conn->real_escape_string($_POST["customerUsername"]);
 } else {
@@ -20,9 +22,10 @@ if (empty($error)) {
     $result = $conn->query($sql)->fetch_assoc();
     $tmp =password_verify($password,$result["password"]);
     if ($tmp) {
-        $_SESSION["user"] = $result["id"];
+        $_SESSION["user"] = $result["Cid"];
         $_SESSION["role"] = 'customer';
-        header("location:../order.html");
+        header("location:../order.php");
+
     } else {
         header("location:../login.php?errorCustomer=Customer Not Found");
     }
